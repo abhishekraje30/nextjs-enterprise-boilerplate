@@ -19,7 +19,7 @@ export default function CustomTextInput({ control, name, label, placeholder, ...
           <label htmlFor={name} className="text-sm">
             {label}
           </label>
-          <Input {...field} {...props} placeholder={placeholder} />
+          <Input {...field} {...props} placeholder={placeholder} addonBefore="http://" addonAfter=".com" />
           {fieldState.error && <p className="text-xs text-red-600">{fieldState.error.message}</p>}
         </div>
       )}

@@ -9,6 +9,9 @@ import CustomInputNumber from "components/FormInputs/CustomInputNumber"
 import CustomMultiSelect from "components/FormInputs/CustomMultiSelect"
 import CustomRadioSelect from "components/FormInputs/CustomRadioSelect"
 import CustomSingleSelect from "components/FormInputs/CustomSingleSelect"
+import CustomSwitch from "components/FormInputs/CustomSwitch"
+import CustomTreeSelect from "components/FormInputs/CustomTreeSelect"
+import CustomUpload from "components/FormInputs/CustomUpload"
 
 const customValidationSchema = zod.object({
   name: zod.string(),
@@ -17,6 +20,9 @@ const customValidationSchema = zod.object({
   roles: zod.array(zod.string()),
   radioInput: zod.string(),
   checkboxInput: zod.array(zod.string()),
+  switch: zod.boolean(),
+  upload: zod.string(),
+  treeSelect: zod.array(zod.string()),
   // email: zod.string({ required_error: "Email is required" }).email({ message: "Invalid email address" }),
   // email_confirmation: zod
   //   .string({ required_error: "Email confirmation is required" })
@@ -37,6 +43,9 @@ export default function MyCustomForm() {
       roles: [],
       radioInput: "",
       checkboxInput: [],
+      switch: false,
+      upload: "",
+      treeSelect: [],
     },
   })
   const onSubmit: SubmitHandler<zod.infer<typeof customValidationSchema>> = (data) => {
@@ -44,8 +53,8 @@ export default function MyCustomForm() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="mx-auto mt-4 w-10/12 rounded-2xl border-2 border-gray-400 p-4 shadow">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <CustomTextInput name="name" control={control} label="Add your name" />
         <CustomInputNumber name="age" control={control} label="Add your age" />
         <CustomSingleSelect
@@ -60,7 +69,7 @@ export default function MyCustomForm() {
         <CustomMultiSelect
           name="roles"
           control={control}
-          label="Roles"
+          label="Multi Select"
           options={[
             {
               label: "China",
@@ -83,7 +92,7 @@ export default function MyCustomForm() {
         <CustomRadioSelect
           name="radioInput"
           control={control}
-          label="Countries"
+          label="Radio Input"
           options={[
             {
               label: "Asia",
@@ -103,6 +112,7 @@ export default function MyCustomForm() {
             },
           ]}
         />
+        <CustomUpload name="upload" control={control} uploadButtonLabel="Upload" />
         <CustomCheckBoxGroup
           name="checkboxInput"
           control={control}
@@ -113,6 +123,49 @@ export default function MyCustomForm() {
             { label: "Orange", value: "Orange", disabled: true },
           ]}
         />
+        <CustomSwitch name="switch" control={control} label="Switch" />
+        <CustomTreeSelect
+          name="treeSelect"
+          control={control}
+          label="Tree Select"
+          treeData={[
+            {
+              title: "Node1",
+              value: "0-0",
+              key: "0-0",
+              children: [
+                {
+                  title: "Child Node1",
+                  value: "0-0-0",
+                  key: "0-0-0",
+                },
+              ],
+            },
+            {
+              title: "Node2",
+              value: "0-1",
+              key: "0-1",
+              children: [
+                {
+                  title: "Child Node3",
+                  value: "0-1-0",
+                  key: "0-1-0",
+                },
+                {
+                  title: "Child Node4",
+                  value: "0-1-1",
+                  key: "0-1-1",
+                },
+                {
+                  title: "Child Node5",
+                  value: "0-1-2",
+                  key: "0-1-2",
+                },
+              ],
+            },
+          ]}
+        />
+
         <Button type="primary" size="large" htmlType="submit">
           Submit
         </Button>

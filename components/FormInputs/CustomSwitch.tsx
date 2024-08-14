@@ -1,34 +1,36 @@
 "use client"
-import { Checkbox, CheckboxProps } from "antd"
+import { Radio, RadioGroupProps, Switch, SwitchProps } from "antd"
 import { Control, Controller } from "react-hook-form"
 
-interface CheckBoxGroupProps extends CheckboxProps {
+interface CustomSwitchProps extends SwitchProps {
   control: Control<any>
   name: string
   label: string
-  options: { value: string; label: string; [key: string]: any }[]
+  size?: "small"
+  defaultChecked?: boolean
   onChange?: (value: any) => void
 }
 
-export default function CustomCheckBoxGroup({ control, name, label, options, onChange, ...props }: CheckBoxGroupProps) {
+export default function CustomSwitch({ control, name, label, onChange, ...props }: CustomSwitchProps) {
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState }) => (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-1">
           <label htmlFor={name} className="text-sm">
             {label}
           </label>
-          <Checkbox.Group
+          <Switch
             {...field}
             {...props}
-            options={options}
+            className="!w-fit"
             onChange={(value) => {
               field.onChange(value)
               if (onChange) onChange(value)
             }}
           />
+
           {fieldState.error && <p className="text-xs text-red-600">{fieldState.error.message}</p>}
         </div>
       )}

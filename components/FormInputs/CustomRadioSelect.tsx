@@ -17,7 +17,7 @@ export default function CustomRadioSelect({ control, name, label, options, onCha
       name={name}
       control={control}
       render={({ field, fieldState }) => (
-        <div>
+        <div className="flex flex-col gap-2">
           <label htmlFor={name} className="text-sm">
             {label}
           </label>

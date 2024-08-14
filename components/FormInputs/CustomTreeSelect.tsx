@@ -1,30 +1,28 @@
 "use client"
-import { Select, SelectProps } from "antd"
+import { TreeSelect, TreeSelectProps } from "antd"
 import { Control, Controller } from "react-hook-form"
 
-interface MultiSelectProps extends SelectProps {
+interface CustomTreeSelectProps extends TreeSelectProps {
   control: Control<any>
   name: string
   label: string
   size?: "small" | "large"
   placeholder?: string
-  options: { value: string; label: string; [key: string]: any }[]
+  treeData: { [key: string]: any }[]
   showSearch?: boolean
   onChange?: (value: any) => void
   onSearch?: (value: string) => void
 }
 
-export default function CustomMultiSelect({
+export default function CustomTreeSelect({
   control,
   name,
   label,
   placeholder,
-  options,
+  treeData,
   showSearch = true,
-  onChange,
-  onSearch,
   ...props
-}: MultiSelectProps) {
+}: CustomTreeSelectProps) {
   return (
     <Controller
       name={name}
@@ -34,22 +32,13 @@ export default function CustomMultiSelect({
           <label htmlFor={name} className="text-sm">
             {label}
           </label>
-          <Select
+          <TreeSelect
             {...field}
             {...props}
-            mode="multiple"
-            allowClear
-            showSearch={showSearch}
+            treeData={treeData}
             placeholder={placeholder}
-            optionFilterProp="label"
-            onChange={(value) => {
-              field.onChange(value)
-              if (onChange) onChange(value)
-            }}
-            onSearch={(value) => {
-              if (onSearch) onSearch(value)
-            }}
-            options={options}
+            showSearch={showSearch}
+            treeCheckable
             className="!w-full"
           />
           {fieldState.error && <p className="text-xs text-red-600">{fieldState.error.message}</p>}
