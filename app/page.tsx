@@ -1,15 +1,18 @@
+import { Button } from "antd"
 import { Metadata } from "next"
-import { auth } from "auth"
-import SignIn from "components/sign-in"
+import Link from "next/link"
 
 export const metadata: Metadata = {
-  title: "Next.js Enterprise Boilerplate",
+  title: "Homepage",
 }
 
 export default async function Web() {
   return (
     <div>
       <h1>Hello World!!</h1>
+      <Button type="primary">
+        <Link href={"/form"}>Form Components</Link>
+      </Button>
     </div>
   )
 }

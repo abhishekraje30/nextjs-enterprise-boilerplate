@@ -23,6 +23,8 @@
     "coupling-graph": "npx madge --extensions js,jsx,ts,tsx,css,md,mdx ./ --exclude '.next|tailwind.config.js|reset.d.ts|prettier.config.js|postcss.config.js|playwright.config.ts|next.config.js|next-env.d.ts|instrumentation.ts|e2e/|README.md|.storybook/|.eslintrc.js' --image graph.svg"
   },
   "dependencies": {
+    "@ant-design/nextjs-registry": "^1.0.1",
+    "@hookform/resolvers": "^3.9.0",
     "@next/bundle-analyzer": "^14.2.3",
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "12.0.0",
@@ -32,12 +34,15 @@
     "@semantic-release/release-notes-generator": "^13.0.0",
     "@t3-oss/env-nextjs": "^0.10.1",
     "@vercel/otel": "^1.8.3",
+    "antd": "^5.20.1",
     "lodash": "^4.17.21",
     "next": "^14.2.3",
     "next-auth": "^5.0.0-beta.20",
     "next-compose-plugins": "^2.2.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.52.2",
+    "react-loader-spinner": "^6.1.6",
     "tailwind-merge": "^2.3.0",
     "zod": "^3.23.8"
   },
