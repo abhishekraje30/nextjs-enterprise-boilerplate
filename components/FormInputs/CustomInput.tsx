@@ -1,3 +1,4 @@
+"use client"
 import { Input, InputProps } from "antd"
 import { Control, Controller } from "react-hook-form"
 
