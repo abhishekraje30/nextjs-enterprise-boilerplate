@@ -7,38 +7,47 @@ import CustomCheckBoxGroup from "components/FormInputs/CustomCheckBoxGroup"
 import CustomTextInput from "components/FormInputs/CustomInput"
 import CustomInputNumber from "components/FormInputs/CustomInputNumber"
 import CustomMultiSelect from "components/FormInputs/CustomMultiSelect"
+import CustomPasswordInput from "components/FormInputs/CustomPasswordInput"
 import CustomRadioSelect from "components/FormInputs/CustomRadioSelect"
 import CustomSingleSelect from "components/FormInputs/CustomSingleSelect"
 import CustomSwitch from "components/FormInputs/CustomSwitch"
 import CustomTreeSelect from "components/FormInputs/CustomTreeSelect"
 import CustomUpload from "components/FormInputs/CustomUpload"
+import CustomOTPInput from "components/FormInputs/CustomOTPInput"
 
-const customValidationSchema = zod.object({
-  name: zod.string(),
-  age: zod.number(),
-  role: zod.string(),
-  roles: zod.array(zod.string()),
-  radioInput: zod.string(),
-  checkboxInput: zod.array(zod.string()),
-  switch: zod.boolean(),
-  upload: zod.string(),
-  treeSelect: zod.array(zod.string()),
-  // email: zod.string({ required_error: "Email is required" }).email({ message: "Invalid email address" }),
-  // email_confirmation: zod
-  //   .string({ required_error: "Email confirmation is required" })
-  //   .email({ message: "Invalid email address" }),
-})
-// .refine((fildsData) => fildsData.email === fildsData.email_confirmation, {
-//   message: "Emails don't match",
-//   path: ["email_confirmation"],
-// })
+const customValidationSchema = zod
+  .object({
+    name: zod.string(),
+    age: zod.number(),
+    mobile: zod.string().length(10, { message: "Mobile number must be 10 digits" }),
+    otp: zod.string().length(6, { message: "OTP must be 6 characters" }),
+    role: zod.string(),
+    roles: zod.array(zod.string()),
+    radioInput: zod.string(),
+    checkboxInput: zod.array(zod.string()),
+    switch: zod.boolean(),
+    upload: zod.string(),
+    treeSelect: zod.array(zod.string()),
+    email: zod.string({ required_error: "Email is required" }).email({ message: "Invalid email address" }),
+    password: zod.string(),
+    password_confirmation: zod.string(),
+  })
+  .refine((fildsData) => fildsData.password === fildsData.password_confirmation, {
+    message: "Passwords don't match",
+    path: ["password_confirmation"],
+  })
 
 export default function MyCustomForm() {
   const { control, handleSubmit } = useForm({
     resolver: zodResolver(customValidationSchema),
     defaultValues: {
       name: "",
+      email: "",
+      password: "",
+      password_confirmation: "",
       age: 0,
+      mobile: "",
+      otp: "",
       role: "",
       roles: [],
       radioInput: "",
@@ -47,6 +56,7 @@ export default function MyCustomForm() {
       upload: "",
       treeSelect: [],
     },
+    mode: "onBlur",
   })
   const onSubmit: SubmitHandler<zod.infer<typeof customValidationSchema>> = (data) => {
     console.log(data)
@@ -55,8 +65,20 @@ export default function MyCustomForm() {
   return (
     <div className="mx-auto mt-4 w-10/12 rounded-2xl border-2 border-gray-400 p-4 shadow">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
-        <CustomTextInput name="name" control={control} label="Add your name" />
+        <CustomTextInput name="name" control={control} label="Add your name" addonBefore="http://" addonAfter=".com" />
+        <CustomTextInput name="email" control={control} label="Email" type="email" />
+        <CustomPasswordInput name="password" control={control} label="Password" />
+        <CustomPasswordInput name="password_confirmation" control={control} label="Confirm password" />
         <CustomInputNumber name="age" control={control} label="Add your age" />
+        <CustomTextInput
+          name="mobile"
+          control={control}
+          label="Mobile Number"
+          type="tel"
+          addonBefore="+91"
+          required={false}
+        />
+        <CustomOTPInput name="otp" control={control} label="OTP" length={6} />
         <CustomSingleSelect
           name="role"
           control={control}

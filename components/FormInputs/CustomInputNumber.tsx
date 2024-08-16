@@ -20,7 +20,13 @@ export default function CustomTextInput({ control, name, label, placeholder, ...
           <label htmlFor={name} className="text-sm">
             {label}
           </label>
-          <InputNumber className="!w-full" {...field} {...props} placeholder={placeholder} />
+          <InputNumber
+            className="!w-full"
+            {...field}
+            {...props}
+            placeholder={placeholder}
+            status={fieldState.error && "error"}
+          />
           {fieldState.error && <p className="text-xs text-red-600">{fieldState.error.message}</p>}
         </div>
       )}

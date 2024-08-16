@@ -39,6 +39,7 @@ export default function CustomTreeSelect({
             placeholder={placeholder}
             showSearch={showSearch}
             treeCheckable
+            status={fieldState.error && "error"}
             className="!w-full"
           />
           {fieldState.error && <p className="text-xs text-red-600">{fieldState.error.message}</p>}

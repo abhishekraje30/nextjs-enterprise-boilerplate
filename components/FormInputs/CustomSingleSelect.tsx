@@ -48,6 +48,7 @@ export default function CustomSingleSelect({
               if (onSearch) onSearch(value)
             }}
             options={options}
+            status={fieldState.error && "error"}
             className="!w-full"
           />
           {fieldState.error && <p className="text-xs text-red-600">{fieldState.error.message}</p>}
