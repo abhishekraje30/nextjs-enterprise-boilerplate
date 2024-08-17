@@ -1,30 +1,28 @@
 "use client"
-import { Select, SelectProps } from "antd"
+import { TreeSelect, TreeSelectProps } from "antd"
 import { Control, Controller } from "react-hook-form"
 
-interface SingleSelectProps extends SelectProps {
+interface CustomTreeSelectProps extends TreeSelectProps {
   control: Control<any>
   name: string
   label: string
   size?: "small" | "large"
   placeholder?: string
-  options: { value: string; label: string; [key: string]: any }[]
+  treeData: { [key: string]: any }[]
   showSearch?: boolean
   onChange?: (value: any) => void
   onSearch?: (value: string) => void
 }
 
-export default function CustomSingleSelect({
+export default function CustomTreeSelect({
   control,
   name,
   label,
   placeholder,
-  options,
+  treeData,
   showSearch = true,
-  onChange,
-  onSearch,
   ...props
-}: SingleSelectProps) {
+}: CustomTreeSelectProps) {
   return (
     <Controller
       name={name}
@@ -34,20 +32,13 @@ export default function CustomSingleSelect({
           <label htmlFor={name} className="text-sm">
             {label}
           </label>
-          <Select
+          <TreeSelect
             {...field}
             {...props}
-            showSearch={showSearch}
+            treeData={treeData}
             placeholder={placeholder}
-            optionFilterProp="label"
-            onChange={(value) => {
-              field.onChange(value)
-              if (onChange) onChange(value)
-            }}
-            onSearch={(value) => {
-              if (onSearch) onSearch(value)
-            }}
-            options={options}
+            showSearch={showSearch}
+            treeCheckable
             status={fieldState.error && "error"}
             className="!w-full"
           />

@@ -1,8 +1,7 @@
-"use client"
-import { Input, InputProps } from "antd"
+import { GetProps, Input } from "antd"
 import { Control, Controller } from "react-hook-form"
 
-interface InputFieldProps extends InputProps {
+interface PasswordProps extends GetProps<typeof Input.Password> {
   control: Control<any>
   name: string
   label: string
@@ -10,7 +9,7 @@ interface InputFieldProps extends InputProps {
   placeholder?: string
 }
 
-export default function CustomTextInput({ control, name, label, placeholder, ...props }: InputFieldProps) {
+export default function CustomPasswordInput({ control, name, label, placeholder, ...props }: PasswordProps) {
   return (
     <Controller
       name={name}
@@ -20,7 +19,7 @@ export default function CustomTextInput({ control, name, label, placeholder, ...
           <label htmlFor={name} className="text-sm">
             {label}
           </label>
-          <Input {...field} {...props} placeholder={placeholder} status={fieldState.error && "error"} />
+          <Input.Password {...field} {...props} placeholder={placeholder} status={fieldState.error && "error"} />
           {fieldState.error && <p className="text-xs text-red-600">{fieldState.error.message}</p>}
         </div>
       )}

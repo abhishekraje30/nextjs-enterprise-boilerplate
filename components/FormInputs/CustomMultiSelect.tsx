@@ -2,7 +2,7 @@
 import { Select, SelectProps } from "antd"
 import { Control, Controller } from "react-hook-form"
 
-interface SingleSelectProps extends SelectProps {
+interface MultiSelectProps extends SelectProps {
   control: Control<any>
   name: string
   label: string
@@ -14,7 +14,7 @@ interface SingleSelectProps extends SelectProps {
   onSearch?: (value: string) => void
 }
 
-export default function CustomSingleSelect({
+export default function CustomMultiSelect({
   control,
   name,
   label,
@@ -24,7 +24,7 @@ export default function CustomSingleSelect({
   onChange,
   onSearch,
   ...props
-}: SingleSelectProps) {
+}: MultiSelectProps) {
   return (
     <Controller
       name={name}
@@ -37,6 +37,8 @@ export default function CustomSingleSelect({
           <Select
             {...field}
             {...props}
+            mode="multiple"
+            allowClear
             showSearch={showSearch}
             placeholder={placeholder}
             optionFilterProp="label"

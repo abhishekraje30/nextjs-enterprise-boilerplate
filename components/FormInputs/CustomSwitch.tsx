@@ -1,32 +1,36 @@
 "use client"
-import { InputNumber, InputNumberProps } from "antd"
+import { Radio, RadioGroupProps, Switch, SwitchProps } from "antd"
 import { Control, Controller } from "react-hook-form"
 
-interface InputNumberFieldProps extends InputNumberProps {
+interface CustomSwitchProps extends SwitchProps {
   control: Control<any>
   name: string
   label: string
-  size?: "small" | "large"
-  placeholder?: string
+  size?: "small"
+  defaultChecked?: boolean
+  onChange?: (value: any) => void
 }
 
-export default function CustomTextInput({ control, name, label, placeholder, ...props }: InputNumberFieldProps) {
+export default function CustomSwitch({ control, name, label, onChange, ...props }: CustomSwitchProps) {
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState }) => (
-        <div>
+        <div className="flex flex-col gap-1">
           <label htmlFor={name} className="text-sm">
             {label}
           </label>
-          <InputNumber
-            className="!w-full"
+          <Switch
             {...field}
             {...props}
-            placeholder={placeholder}
-            status={fieldState.error && "error"}
+            className="!w-fit"
+            onChange={(value) => {
+              field.onChange(value)
+              if (onChange) onChange(value)
+            }}
           />
+
           {fieldState.error && <p className="text-xs text-red-600">{fieldState.error.message}</p>}
         </div>
       )}

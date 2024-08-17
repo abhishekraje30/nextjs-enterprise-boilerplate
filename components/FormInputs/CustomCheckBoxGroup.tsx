@@ -1,55 +1,33 @@
 "use client"
-import { Select, SelectProps } from "antd"
+import { Checkbox, CheckboxProps } from "antd"
 import { Control, Controller } from "react-hook-form"
 
-interface SingleSelectProps extends SelectProps {
+interface CheckBoxGroupProps extends CheckboxProps {
   control: Control<any>
   name: string
   label: string
-  size?: "small" | "large"
-  placeholder?: string
   options: { value: string; label: string; [key: string]: any }[]
-  showSearch?: boolean
   onChange?: (value: any) => void
-  onSearch?: (value: string) => void
 }
 
-export default function CustomSingleSelect({
-  control,
-  name,
-  label,
-  placeholder,
-  options,
-  showSearch = true,
-  onChange,
-  onSearch,
-  ...props
-}: SingleSelectProps) {
+export default function CustomCheckBoxGroup({ control, name, label, options, onChange, ...props }: CheckBoxGroupProps) {
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState }) => (
-        <div>
+        <div className="flex flex-col gap-2">
           <label htmlFor={name} className="text-sm">
             {label}
           </label>
-          <Select
+          <Checkbox.Group
             {...field}
             {...props}
-            showSearch={showSearch}
-            placeholder={placeholder}
-            optionFilterProp="label"
+            options={options}
             onChange={(value) => {
               field.onChange(value)
               if (onChange) onChange(value)
             }}
-            onSearch={(value) => {
-              if (onSearch) onSearch(value)
-            }}
-            options={options}
-            status={fieldState.error && "error"}
-            className="!w-full"
           />
           {fieldState.error && <p className="text-xs text-red-600">{fieldState.error.message}</p>}
         </div>
