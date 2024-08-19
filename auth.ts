@@ -5,19 +5,20 @@ import type { NextAuthConfig } from "next-auth"
 
 import Credentials from "next-auth/providers/credentials"
 import Google from "next-auth/providers/google"
+import { SIGN_IN } from "app/lib/routes"
 
 class InvalidLoginError extends CredentialsSignin {
   code = "Invalid identifier or password"
 }
 
 const config = {
+  pages: {
+    signIn: "/auth/sign-in",
+  },
+
   providers: [
     Google,
     Credentials({
-      credentials: {
-        username: { label: "Username" },
-        password: { label: "Password", type: "password" },
-      },
       async authorize(credentials) {
         throw new InvalidLoginError()
       },
@@ -28,7 +29,7 @@ const config = {
     Callbacks allow you to implement access controls without a database and to integrate with external databases or APIs. */
     async signIn({ user, account, profile, email, credentials }) {
       /* Use the signIn() callback to control if a user is allowed to sign in. */
-      console.log({ user, account, profile, email, credentials })
+      // console.log({ user, account, profile, email, credentials })
       const isAllowedToSignIn = true
       if (isAllowedToSignIn) {
         return true
@@ -45,7 +46,7 @@ const config = {
 
       NOTE: The redirect callback may be invoked more than once in the same flow. */
 
-      console.log({ url, baseUrl })
+      if (url === `${baseUrl}/${SIGN_IN}`) return baseUrl
       // Allows relative callback URLs
       if (url.startsWith("/")) return `${baseUrl}${url}`
       // Allows callback URLs on the same origin
@@ -64,7 +65,7 @@ const config = {
       Requests to /api/auth/signin, /api/auth/session and calls to getSession(), getServerSession(), useSession() will invoke this function, but only if you are using a JWT session.      
       This method is not invoked when you persist sessions in a database.
       The returned value will be encrypted, and it is stored in a cookie. */
-      console.log({ token, trigger, session, account })
+      // console.log({ token, trigger, session, account })
       // Persist the OAuth access_token and or the user id to the token right after signin
       if (account) {
         token.accessToken = account.access_token
