@@ -1,6 +1,6 @@
 "use client"
 import { SyncOutlined } from "@ant-design/icons"
-import { Button, Flex, Table, Tooltip } from "antd"
+import { Button, Flex, Table, Tag, Tooltip } from "antd"
 import type { TableColumnsType, TableProps } from "antd"
 import React, { useState } from "react"
 
@@ -53,9 +53,9 @@ export default function CustomTable() {
 
   return (
     <div className="flex flex-col gap-1">
-      <div className="flex justify-end gap-2">
-        {hasSelected ? <span>Selected {selectedRowKeys.length} items</span> : null}
-        <div onClick={start} className="flex cursor-pointer gap-2">
+      <div className="flex items-center justify-end gap-2">
+        {hasSelected ? <Tag color="purple">Selected {selectedRowKeys.length} items</Tag> : null}
+        <div onClick={start} className="flex cursor-pointer items-center gap-2">
           <Tooltip title="refresh" placement="topLeft">
             <SyncOutlined spin={loading} color="#492971" />
           </Tooltip>
