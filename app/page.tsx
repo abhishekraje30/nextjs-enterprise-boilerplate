@@ -1,18 +1,20 @@
-import { Button } from "antd"
 import { Metadata } from "next"
-import Link from "next/link"
+import { auth } from "auth"
+import HeaderSidebar from "components/HeaderSidebar"
 
 export const metadata: Metadata = {
   title: "Homepage",
 }
 
 export default async function Web() {
+  const session = await auth()
   return (
     <div>
-      <h1>Hello World!!</h1>
-      <Button type="primary">
-        <Link href={"/form"}>Form Components</Link>
-      </Button>
+      <HeaderSidebar />
+      <div className="flex flex-col rounded-md bg-gray-100">
+        <div className="rounded-t-md p-4 font-bold">Current Session</div>
+        <pre className="whitespace-pre-wrap break-all px-4 py-6">{JSON.stringify(session, null, 2)}</pre>
+      </div>
     </div>
   )
 }

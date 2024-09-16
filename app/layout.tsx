@@ -2,6 +2,8 @@ import { AntdRegistry } from "@ant-design/nextjs-registry"
 import { Metadata } from "next"
 import { Poppins, Roboto } from "next/font/google"
 import "styles/tailwind.css"
+import { SessionProvider } from "next-auth/react"
+import { auth } from "auth"
 
 export const metadata: Metadata = {
   title: "Next.js Boilerplate",
@@ -23,12 +25,15 @@ const roboto = Roboto({
   weight: ["400", "500", "700"],
 })
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const session = await auth()
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${roboto.variable}`}>
-        <AntdRegistry>{children}</AntdRegistry>
-      </body>
+      <SessionProvider session={session}>
+        <AntdRegistry>
+          <body className={`${poppins.variable} ${roboto.variable}`}>{children}</body>
+        </AntdRegistry>
+      </SessionProvider>
     </html>
   )
 }
